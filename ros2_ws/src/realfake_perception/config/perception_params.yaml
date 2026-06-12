@@ -1,0 +1,10 @@
+realfake_perception_node:
+  ros__parameters:
+    backend: "onnx"                          # Options: "onnx", "yolo", "tf"
+    onnx_model_path: "models/cnn_realfake.onnx"
+    tf_model_path: "models/cnn_realfake.keras"
+    yolo_model_path: "models/yolo_realfake.onnx"
+    confidence_threshold: 0.50
+    camera_topic: "/camera/image_raw"
+    publish_annotated: true
+    deadzone_px: 40                          # Deadband for robot gripper centering alignment
