@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robocon Real-Time Perception Pipeline — ROS 2 Vision Node</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="header-bar">
+            <div class="brand">
+                <div class="logo-icon">🤖</div>
+                <div>
+                    <h1 class="project-title">REAL-TIME PERCEPTION PIPELINE</h1>
+                    <span class="sub-title">ROS 2 VISION NODE • ABU ROBOCON</span>
+                </div>
+            </div>
+
+            <!-- Top Right Controls -->
+            <div class="header-controls">
+                <button id="btn-toggle-pipeline" class="btn-power btn-stop">
+                    <span id="btn-power-icon">⏹</span>
+                    <span id="btn-power-text">STOP PERCEPTION</span>
+                </button>
+                <div class="backend-selector-wrapper">
+                    <label for="backend-select">⚡ INFERENCE ENGINE:</label>
+                    <select id="backend-select" class="backend-select">
+                        <option value="onnx" selected>🚀 ONNX Runtime (CPU 30+ FPS)</option>
+                        <option value="tf">🧠 TensorFlow / Keras CNN</option>
+                        <option value="yolo">🎯 YOLOv8 Object Detector</option>
+                    </select>
+                </div>
+                <div class="status-pill" id="system-status-pill">
+                    <span class="status-dot"></span>
+                    <span id="system-status-text">NODE ACTIVE</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-grid">
+            <!-- Left: Video Feed -->
+            <section class="video-card">
+                <div class="card-header">
+                    <span class="card-title">📹 LIVE CAMERA STREAM (/camera/image_raw)</span>
+                    <div class="fps-badge"><span id="metric-fps">0.0</span> FPS</div>
+                </div>
+                <div class="video-wrapper">
+                    <img id="video-stream" src="/video_feed" alt="Perception Feed">
+                    <div class="target-crosshair"></div>
+                </div>
+                <div class="video-footer">
+                    <span class="footer-tag">Topic: <code>/perception/image_annotated</code></span>
+                    <span class="footer-tag">Latency: <b id="metric-latency">0.0 ms</b></span>
+                </div>
+            </section>
+
+            <!-- Right: Real-time Telemetry & Decision Engine Cards -->
+            <section class="telemetry-column">
+                <!-- 1. Robot Decision Card -->
+                <div class="telemetry-card action-card" id="decision-card">
+                    <div class="card-header">
+                        <span class="card-title">⚡ ROBOT DECISION ENGINE</span>
+                        <span class="badge" id="badge-lock">SEARCHING</span>
+                    </div>
+                    <div class="action-display" id="action-text">SEARCHING_TARGET</div>
+                    <p class="status-msg" id="status-msg">Scanning arena for competition boxes...</p>
+                </div>
+
+                <!-- 2. Target Classification & Metrics Card -->
+                <div class="telemetry-card">
+                    <div class="card-header">
+                        <span class="card-title">📦 TARGET CLASSIFICATION</span>
+                        <span class="badge badge-backend" id="active-backend-badge">ONNX CPU</span>
+                    </div>
+                    
+                    <div class="metric-row">
+                        <div class="metric-item">
+                            <span class="metric-label">CLASSIFICATION</span>
+                            <span class="metric-value" id="val-class">--</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">CONFIDENCE</span>
+                            <span class="metric-value" id="val-conf">0.0%</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="conf-progress-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <!-- 3. Kinematics & Gripper Alignment Card -->
+                <div class="telemetry-card">
+                    <div class="card-header">
+                        <span class="card-title">🎯 GRIPPER TARGETING & POSE</span>
+                    </div>
+                    <div class="telemetry-grid">
+                        <div class="data-box">
+                            <span class="data-label">HEADING ERROR</span>
+                            <span class="data-val" id="val-heading">0.0°</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">X OFFSET</span>
+                            <span class="data-val" id="val-offset-x">0 px</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">DISTANCE PROXY</span>
+                            <span class="data-val" id="val-distance">0.00</span>
+                        </div>
+                        <div class="data-box">
+                            <span class="data-label">GRIPPER CMD</span>
+                            <span class="data-val" id="val-gripper">IDLE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. ROS 2 Topic Terminal Monitor -->
+                <div class="telemetry-card log-card">
+                    <div class="card-header">
+                        <span class="card-title">📢 ROS 2 TOPIC BROADCAST</span>
+                    </div>
+                    <pre class="ros-log" id="ros-log-terminal">{"topic": "/perception/decision", "action": "SEARCHING"}</pre>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
