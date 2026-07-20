@@ -1,6 +1,6 @@
 # 🤖 Real-Time Perception Pipeline — ROS 2 Vision Node
 
-[![ROS 2](https://img.shields.io/badge/ROS_2-Humble%20%7C%20Iron-blue.svg?style=for-the-badge&logo=ros&logoColor=white)](https://docs.ros.org/en/humble/)
+[![ROS 2](<https://img.shields.io/badge/ROS_2-Humble%20%7C%20Iron-blue.svg?style=for-the-badge&logo=ros&logoColor=white>)](https://docs.ros.org/en/humble/)
 [![ONNX Runtime](https://img.shields.io/badge/ONNX_Runtime-30%2B_FPS_CPU-purple.svg?style=for-the-badge&logo=onnx&logoColor=white)](https://onnxruntime.ai/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15%2B-orange.svg?style=for-the-badge&logo=tensorflow&logoColor=white)](https://www.tensorflow.org/)
 [![OpenCV](https://img.shields.io/badge/OpenCV-4.7%2B-red.svg?style=for-the-badge&logo=opencv&logoColor=white)](https://opencv.org/)
@@ -13,18 +13,18 @@ A modular, production-grade **Real-Time Perception Pipeline and ROS 2 Vision Nod
 ## 📋 Table of Contents
 
 - [🎯 System Architecture](#-system-architecture)
-- [⚡ Key Features & Highlights](#-key-features--highlights)
+- [⚡ Key Features &amp; Highlights](#-key-features--highlights)
 - [📊 CPU Inference Benchmarks](#-cpu-inference-benchmarks)
 - [🧠 Autonomous Robot Decision Engine](#-autonomous-robot-decision-engine)
-- [🚀 Quick Start & Usage](#-quick-start--usage)
+- [🚀 Quick Start &amp; Usage](#-quick-start--usage)
   - [1. Installation](#1-installation)
   - [2. Interactive Web Dashboard](#2-interactive-web-dashboard)
-  - [3. Standalone CLI & Camera Runner](#3-standalone-cli--camera-runner)
-  - [4. ROS 2 Launch & Topics](#4-ros-2-launch--topics)
+  - [3. Standalone CLI &amp; Camera Runner](#3-standalone-cli--camera-runner)
+  - [4. ROS 2 Launch &amp; Topics](#4-ros-2-launch--topics)
   - [5. Run Performance Benchmark](#5-run-performance-benchmark)
   - [6. Run Automated Test Suite](#6-run-automated-test-suite)
-- [🔄 ONNX Model Export & Training](#-onnx-model-export--training)
-- [🔮 Future Scope & Advanced Roadmap](#-future-scope--advanced-roadmap)
+- [🔄 ONNX Model Export &amp; Training](#-onnx-model-export--training)
+- [🔮 Future Scope &amp; Advanced Roadmap](#-future-scope--advanced-roadmap)
 - [📂 Project Structure](#-project-structure)
 - [🤝 Contributing](#-contributing)
 - [📄 License](#-license)
@@ -36,17 +36,17 @@ A modular, production-grade **Real-Time Perception Pipeline and ROS 2 Vision Nod
 ```mermaid
 graph TD
     Camera["📷 Camera Feed / ROS 2 Topic (/camera/image_raw)"] --> Node["🤖 ROS 2 Perception Node (perception_node.py)"]
-    
+  
     subgraph Modular Backends ["⚡ Hot-Swappable Backends (30+ FPS CPU)"]
         Node --> B1["🚀 ONNX Runtime Backend (.onnx)"]
         Node --> B2["🎯 YOLO Object Detection Backend (.pt / .onnx)"]
         Node --> B3["🧠 TensorFlow CNN Backend (.keras / .h5)"]
     end
-    
+  
     B1 --> Detections["📦 Geometrical Detections (Class, Confidence, BBox, Latency)"]
     B2 --> Detections
     B3 --> Detections
-    
+  
     Detections --> DecisionEngine["🧠 Robot Decision Engine (decision_engine.py)"]    DecisionEngine --> Pub1["📢 /perception/detections (std_msgs/String JSON)"]
     DecisionEngine --> Pub2["🎯 /perception/decision (std_msgs/String JSON)"]
     DecisionEngine --> Pub3["🖼️ /perception/image_annotated (sensor_msgs/Image)"]
@@ -70,11 +70,11 @@ graph TD
 
 Performance benchmark evaluated across backends on CPU:
 
-| Inference Backend | Architecture | Avg Latency | P95 Latency | Throughput (FPS) | Target Met (30+ FPS) |
-| :--- | :--- | :---: | :---: | :---: | :---: |
-| **🚀 ONNX Runtime** | Graph Optimized `.onnx` | **3.89 ms** | **4.54 ms** | **257.0 FPS** | **✅ EXCEEDED (8.5x Target)** |
-| **🧠 TensorFlow / Keras** | Sequential CNN `.keras` | **22.18 ms** | **22.70 ms** | **45.1 FPS** | **✅ YES (30+ FPS)** |
-| **🎯 YOLOv8 Detection** | PyTorch / ONNX `.pt`/`.onnx` | **~18.50 ms** | **~24.00 ms** | **~54.0 FPS** | **✅ YES (30+ FPS)** |
+| Inference Backend               | Architecture                    |     Avg Latency     |     P95 Latency     |  Throughput (FPS)  |        Target Met (30+ FPS)        |
+| :------------------------------ | :------------------------------ | :-----------------: | :-----------------: | :-----------------: | :---------------------------------: |
+| **🚀 ONNX Runtime**       | Graph Optimized`.onnx`        |  **3.89 ms**  |  **4.54 ms**  | **257.0 FPS** | **✅ EXCEEDED (8.5x Target)** |
+| **🧠 TensorFlow / Keras** | Sequential CNN`.keras`        | **22.18 ms** | **22.70 ms** | **45.1 FPS** |     **✅ YES (30+ FPS)**     |
+| **🎯 YOLOv8 Detection**   | PyTorch / ONNX`.pt`/`.onnx` | **~18.50 ms** | **~24.00 ms** | **~54.0 FPS** |     **✅ YES (30+ FPS)**     |
 
 ---
 
@@ -145,6 +145,7 @@ ros2 launch realfake_perception perception_pipeline.launch.py backend:=onnx came
 ```
 
 #### Monitored Topics:
+
 - **`sub`** `/camera/image_raw` (`sensor_msgs/msg/Image`): Input RGB camera stream.
 - **`pub`** `/perception/detections` (`std_msgs/msg/String` JSON): Real-time bounding boxes and confidence.
 - **`pub`** `/perception/decision` (`std_msgs/msg/String` JSON): Robot action (`PICK_REAL` / `REJECT_FAKE`) and heading angles.
